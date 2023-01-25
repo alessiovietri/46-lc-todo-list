@@ -21,43 +21,48 @@
                 <img src="./img/logo.png" alt="">
             </div>
 
-            <!-- 
-
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-
-                    addTodo();
-                });
-
-             -->
-
             <div class="new-task">
-                <form action="" @submit.prevent="addTodo()">
+                <!-- Versione con form -->
+                <!-- <form action="" @submit.prevent="addTodo()">
                     <input type="text" v-model="newTodo" required minlength="4" placeholder="Nuova task">
                     <button>
                         Aggiungi
                     </button>
-                </form>
+                </form> -->
 
-                <!-- <input type="text" v-model="newTodo" placeholder="Nuova task">
+                <!-- Versione senza form -->
+                <input type="text" @keyup.enter="addTodo()" v-model="newTodo" placeholder="Nuova task">
                 <button @click="addTodo()">
                     Aggiungi
-                </button> -->
+                </button>
             </div>
 
             <div class="tasks-container">
-                <!-- <ul v-show="todos.length > 0"> -->
-                <ul v-if="todos.length > 0">
-                    <li class="task" v-for="(element, index) in todos">
-                        {{ element }}
+                <ul>
+                    <!-- 1a versione -->
+                    <!-- <li class="task" v-for="todo in todos" :class="checkDone(todo)"> -->
+                        
+                    <!-- 2a versione -->
+                    <!-- <li class="task" v-for="singleTodo in todos" :class="{
+                        'todo-done': singleTodo.done
+                    }"> -->
+                        
+                    <!-- 3a versione -->
+                    <!--
+                        OPERATORE TERNARIO
+                        Q ? X : Y
+                        Q => condizione da verificare
+                        X => cosa succede nel caso in cui la condizione sia vera (true)
+                        Y => cosa succede nel caso in cui la condizione sia false (false)
+                    -->
+                    <li class="task" v-for="(singleTodo, i) in todos" @click="singleTodo.done = !singleTodo.done">
+                        <span :class="singleTodo.done ? 'todo-done' : ''">
+                            {{ singleTodo.text }}
+                        </span>
 
-                        <i class="fas fa-times" @click="removeTodo(index)"></i>
+                        <i class="fas fa-times" @click.stop="removeTodo(i)"></i>
                     </li>
                 </ul>
-                <!-- <h2 v-show="todos.length == 0"> -->
-                <h2 v-else>
-                    Super produttivo! Hai completato tutti i task
-                </h2>
             </div>
             
         </div>

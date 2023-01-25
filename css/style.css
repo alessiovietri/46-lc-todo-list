@@ -62,3 +62,7 @@
 .task i {
     float: right;
 }
+
+.todo-done {
+    text-decoration: line-through;
+}
